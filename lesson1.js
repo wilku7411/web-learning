@@ -22,12 +22,3 @@ do
     result = confirm("Do you want to check another item?", [false]);
 }
 while(result);
-
-let fetchPromise = fetch("something.jpg").then(response =>
-    {
-        console.log("Fetch complete" + response);
-        return response.blob();
-    }).then(response =>
-    {
-        document.getElementById("picture").src = URL.createObjectURL(response);
-    })
