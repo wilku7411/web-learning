@@ -1,0 +1,19 @@
+{
+  "name": "nodejs_learning_pkg",
+  "version": "1.0.0",
+  "description": "Application which I used to lear the web-development. More specifically nodejs and data storing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web-dev",
+    "nodejs",
+    "learning"
+  ],
+  "author": "Albert",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
