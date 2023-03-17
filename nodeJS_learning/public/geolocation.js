@@ -23,15 +23,15 @@ async function getPositionCallback(position)
     console.log(responseData);
 }
 
-function getGeolocation()
+function sentGeolocationToServer()
 {
     if("geolocation" in navigator)
     {
-        console.log("yaay");
+        console.log("Geolocation POST requested");
         navigator.geolocation.getCurrentPosition(getPositionCallback);
     }
     else
     {
-        console.log("naaay");
+        console.log("Failed to access geolocation from navigator!");
     }
 }
