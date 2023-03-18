@@ -1,5 +1,10 @@
 "use strict";
 
+function goToCollection()
+{
+    window.location = "/collection.html";
+}
+
 async function getPositionCallback(position)
 {
     console.log(position);
@@ -34,4 +39,19 @@ function sentGeolocationToServer()
     {
         console.log("Failed to access geolocation from navigator!");
     }
+}
+
+async function getGeolocationCollectionFromServer()
+{
+    const response = await fetch("/api");
+    const responseAsJson = await response.json();
+    console.log(responseAsJson);
+}
+
+async function trySteam()
+{
+    const Steam = "http://store.steampowered.com/appreviews/2284900?json=1";
+    const AA = await fetch(Steam);
+    const BB = AA.json();
+    console.log(BB);
 }
