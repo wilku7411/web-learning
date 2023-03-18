@@ -62,8 +62,16 @@ async function getGeolocationCollectionFromServer()
 
 async function trySteam()
 {
-    const Steam = "http://store.steampowered.com/appreviews/2284900?json=1";
-    const AA = await fetch(Steam);
-    const BB = AA.json();
+    const steamAppId = document.getElementById("steamID").value;
+    const AA = await fetch(`/externalApi/${steamAppId}`);
+    const BB = await AA.json();
+
+    const root = document.createElement("div");
+    const steamAppData = document.createElement("div");
+
+    steamAppData.textContent = CC;
+    root.append(steamAppData);
+    document.body.append(root);
+
     console.log(BB);
 }
