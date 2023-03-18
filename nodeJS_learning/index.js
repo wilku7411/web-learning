@@ -41,7 +41,8 @@ app.get("/api", (request, response) => {
 });
 
 app.get("/externalApi/:steamAppId", async (request, response)=>{
-
+    console.clear();
+    console.log("App details requested");
     //const hots = "https://www.hotslogs.com/api/Data/Heroes";
     //const Steam = "https://api.store.steampowered.com/appreviews/420?json=1";
     //const Steam = "https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=440&count=3";
@@ -56,6 +57,65 @@ app.get("/externalApi/:steamAppId", async (request, response)=>{
          }
     );
     const BB = await AA.json();
-    response.json(BB);
     console.log(BB);
+    response.json(BB);
+})
+
+app.get("/externalApi/reviews/:steamAppId", async (request, response)=>{
+    
+    console.clear();
+    console.log("===Reviews requested===");
+
+    let reviewsCounter = 0;
+    let iterationCounter = 0;
+    let previousCursor = undefined;
+    let currentCursor = "*";
+    let allReviews = [];
+    let cursorHistory = [];
+    cursorHistory.push([previousCursor, currentCursor]);
+
+    while(true)
+    {
+        let appReviews;
+        // if(currentCursor === undefined)
+        // {
+        //     console.log("==============================================First batch==============================================");
+        //     appReviews = `https://store.steampowered.com/appreviews/${request.params.steamAppId}?json=1`;
+        // }
+        // else
+        // {
+            console.log(`("==============================================Batch number ${parseInt(iterationCounter++)}==============================================`);
+            appReviews = `https://store.steampowered.com/appreviews/${request.params.steamAppId}?json=1&cursor=${encodeURIComponent(currentCursor)}`;
+        //}
+
+        const reviews = await fetch(appReviews ,{
+            'ContentType':'application/x-www-form-urlencoded'
+        });
+        const reviews_json = await reviews.json();
+
+        allReviews.push(reviews_json);
+        //console.log(review_json);
+
+        previousCursor = currentCursor;
+        currentCursor = reviews_json.cursor;  
+        if(previousCursor == currentCursor)
+        {
+            break;
+        }
+
+        console.log(currentCursor);
+        cursorHistory.push(currentCursor);
+
+        for(let item of reviews_json.reviews)
+        {
+            console.log(reviewsCounter++);
+            console.log(item.review);
+        }
+    }
+
+    console.log("cursorHistory");
+    console.log(cursorHistory);
+    console.log("=============");
+
+    response.json(allReviews);
 })

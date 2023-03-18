@@ -69,9 +69,25 @@ async function trySteam()
     const root = document.createElement("div");
     const steamAppData = document.createElement("div");
 
-    steamAppData.textContent = CC;
+    steamAppData.textContent = Object.values(BB[steamAppId].data);
     root.append(steamAppData);
     document.body.append(root);
 
-    console.log(BB);
+    console.log(BB[steamAppId].data.name);
+}
+
+async function getSteamAppReviews()
+{
+    const steamAppId = document.getElementById("steamID").value;
+    const AA = await fetch(`/externalApi/reviews/${steamAppId}`);
+    const BB = await AA.json();
+
+    const root = document.createElement("div");
+    const steamAppData = document.createElement("div");
+
+    steamAppData.textContent = Object.values(BB[steamAppId].data);
+    root.append(steamAppData);
+    document.body.append(root);
+
+    console.log(BB[steamAppId].data.name);
 }
