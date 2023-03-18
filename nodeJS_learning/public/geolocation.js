@@ -46,6 +46,18 @@ async function getGeolocationCollectionFromServer()
     const response = await fetch("/api");
     const responseAsJson = await response.json();
     console.log(responseAsJson);
+    for(let item of responseAsJson)
+    {
+        const root = document.createElement("div");
+        const coord = document.createElement("div");
+        const time = document.createElement("div");
+
+        coord.textContent = `${item.lat} ${item.lon}`;
+        time.textContent = new Date(item.timestamp).toLocaleDateString();
+
+        root.append(coord, time);
+        document.body.append(root);
+    }
 }
 
 async function trySteam()
