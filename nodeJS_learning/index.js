@@ -74,19 +74,11 @@ app.get("/externalApi/reviews/:steamAppId", async (request, response)=>{
     let cursorHistory = [];
     cursorHistory.push([previousCursor, currentCursor]);
 
-    while(true)
+    while(/*true*/reviewsCounter < 5)
     {
         let appReviews;
-        // if(currentCursor === undefined)
-        // {
-        //     console.log("==============================================First batch==============================================");
-        //     appReviews = `https://store.steampowered.com/appreviews/${request.params.steamAppId}?json=1`;
-        // }
-        // else
-        // {
-            console.log(`("==============================================Batch number ${parseInt(iterationCounter++)}==============================================`);
-            appReviews = `https://store.steampowered.com/appreviews/${request.params.steamAppId}?json=1&cursor=${encodeURIComponent(currentCursor)}`;
-        //}
+        console.log(`("==============================================Batch number ${parseInt(iterationCounter++)}==============================================`);
+        appReviews = `https://store.steampowered.com/appreviews/${request.params.steamAppId}?json=1&cursor=${encodeURIComponent(currentCursor)}&num_per_page=1`;
 
         const reviews = await fetch(appReviews ,{
             'ContentType':'application/x-www-form-urlencoded'
@@ -94,7 +86,7 @@ app.get("/externalApi/reviews/:steamAppId", async (request, response)=>{
         const reviews_json = await reviews.json();
 
         allReviews.push(reviews_json);
-        //console.log(review_json);
+        console.log(reviews_json);
 
         previousCursor = currentCursor;
         currentCursor = reviews_json.cursor;  
