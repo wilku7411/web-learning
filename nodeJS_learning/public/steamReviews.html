@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moja Strona</title>
+  </head>
+  <body>
+    
+    <input type="steamAppID" id="steamAppId" placeholder="Wprowadź SteamApp ID">
+    <button onclick="collectReviews()">CollectReviews</button>
+
+    <script>
+        async function collectReviews()
+        {
+            const steamAppId = document.getElementById("steamAppID").value;
+            const AA = await fetch(`/externalApi/${steamAppId}`);
+            const BB = await AA.json();
+            
+            const root = document.createElement("div");
+            const steamAppData = document.createElement("div");
+
+            steamAppData.textContent = Object.values(BB[steamAppId].data);
+            root.append(steamAppData);
+            document.body.append(root);
+
+            console.log(BB[steamAppId].data.name);
+        }
+    </script>
+
+    <table>
+        <thead>
+          <tr>
+            <th>Recenzja</th>
+            <th>Czas gry</th>
+            <th>Sentyment</th>
+            <th>Jest botem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tekst recenzji 1</td>
+            <td>20</td>
+            <td>8</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>Tekst recenzji 2</td>
+            <td>30</td>
+            <td>6</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td>Tekst recenzji 3</td>
+            <td>40</td>
+            <td>9</td>
+            <td>false</td>
+          </tr>
+        </tbody>
+      </table>
+
+  </body>
+</html>
+
+
+
+  
